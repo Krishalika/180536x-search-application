@@ -1,7 +1,5 @@
-import React from "react";
-
+import React, { useState } from "react";
 import ElasticsearchAPIConnector from "@elastic/search-ui-elasticsearch-connector";
-
 import {
   ErrorBoundary,
   Facet,
@@ -23,7 +21,6 @@ const connector = new ElasticsearchAPIConnector({
   apiKey: "VlVqN3U0VUJnNjZCUU14ejZQeDg6YVhzblctZUZUd3EtM2NpcF8xdVJUUQ==",
   index: "search-engine"
 });
-
 const config = {
   searchQuery: {
     search_fields: {
@@ -31,9 +28,13 @@ const config = {
         weight: 3
       },
     },
+    sort: {
+      "Title.keyword": { order: "asc" }
+    },
     result_fields: {
       Title: {
-        snippet: {}
+        snippet: {},
+        keyword: {}
       },
       Singer: {
         snippet: {}
@@ -73,32 +74,7 @@ const config = {
     facets: {
       "Singer.keyword": { type: "value" },
       "Composer.keyword": { type: "value" },
-      "Lyricist.keyword": { type: "value" }
-    }
-  },
-
-  autocompleteQuery: {
-    results: {
-      resultsPerPage: 5,
-      search_fields: {
-        "Target.suggest": {
-          weight: 3
-        }
-      },
-      result_fields: {
-        Target: {
-          snippet: {
-            size: 100,
-            fallback: true
-          }
-        },
-      }
-    },
-    suggestions: {
-      types: {
-        results: { fields: ["movie_completion"] }
-      },
-      size: 4
+      "Lyricist.keyword": { type: "value" },
     }
   },
 
@@ -107,6 +83,15 @@ const config = {
 };
 
 export default function App() {
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const handleSortAsc = () => {
+    setSortOrder("asc");
+  };
+
+  const handleSortDesc = () => {
+    setSortOrder("desc");
+  };
   return (
     <SearchProvider config={config}>
       <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
@@ -115,16 +100,24 @@ export default function App() {
             <div className="App">
               <ErrorBoundary>
                 <Layout
-                  header={<SearchBox autocompleteSuggestions={false} />}
-                  sideContent={
+                  header={
+                    <>
+                      <SearchBox autocompleteSuggestions={false} />
+                      {/* <button onClick={handleSortAsc}>Sort by Title (Ascending)</button>
+                      <button onClick={handleSortDesc}>Sort by Title (Descending)</button> */}
+                    </>
+                  } sideContent={
                     <div>
-                    <Facet key={"1"} field={"Singer.keyword"} label={"Singer"} />
-                    <Facet key={"2"} field={"Composer.keyword"} label={"Composer"} />
-                    <Facet key={"3"} field={"Lyricist.keyword"} label={"Lyricist"} />
+                      <Facet key={"1"} field={"Singer.keyword"} label={"Singer"} />
+                      <Facet key={"2"} field={"Composer.keyword"} label={"Composer"} />
+                      <Facet key={"3"} field={"Lyricist.keyword"} label={"Lyricist"} />
                     </div>
                   }
                   bodyContent={
-                    <Results shouldTrackClickThrough={true} />
+                    <Results
+                      shouldTrackClickThrough={true}
+                      sortOptions={[{ field: "Title", order: sortOrder }]}
+                    />
                   }
                   bodyHeader={
                     <React.Fragment>

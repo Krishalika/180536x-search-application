@@ -7,17 +7,17 @@ class TextCorpus(scrapy.Spider):
 	# First Start Url
 	start_urls = ["https://www.sinhalasongbook.com/category/amarasiri-peiris", "https://www.sinhalasongbook.com/category/milton-mallawarachchi", "https://www.sinhalasongbook.com/category/amaradewa", "https://www.sinhalasongbook.com/category/t-m-jayarathna"]
 
-	npages = 3 
-	npg = 2
-	noPage = 1
+	npages_1 = 3 
+	npages_2 = 2
+	npages_3 = 1
 	# This mimics getting the pages using the next button. 
-	for i in range(2, npages + 2):
+	for i in range(2, npages_1 + 2):
 		start_urls.append("	https://www.sinhalasongbook.com/category/milton-mallawarachchi/page/"+str(i)+"/")
 
-	for i in range(2, npg + 2):
+	for i in range(2, npages_2 + 2):
 		start_urls.append("	https://www.sinhalasongbook.com/category/amaradewa/page/"+str(i)+"/")
 
-	for i in range(2, noPage + 2):
+	for i in range(2, npages_3 + 2):
 		start_urls.append("	https://www.sinhalasongbook.com/category/t-m-jayarathna/page/"+str(i)+"/")
 
 	def parse(self, response):
