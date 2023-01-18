@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ElasticsearchAPIConnector from "@elastic/search-ui-elasticsearch-connector";
 import {
   ErrorBoundary,
@@ -18,8 +18,8 @@ const connector = new ElasticsearchAPIConnector({
   cloud: {
     id: "search-engine:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvOjQ0MyRlMzljMzkwMTRmZTQ0YmUzYjNhNGY3M2VkZGMyZjcwYiQwZjIyNzJlZTFlZGM0NGRjOTM5NjFhM2IwYTc3ZjQ1Zg=="
   },
-  apiKey: "VlVqN3U0VUJnNjZCUU14ejZQeDg6YVhzblctZUZUd3EtM2NpcF8xdVJUUQ==",
-  index: "search-engine"
+  apiKey: "UVVpcXhvVUJnNjZCUU14ejdQM0E6WDRxSElWYjhSVlNHRGt2eFVQVWNXZw==",
+  index: "search-index"
 });
 const config = {
   searchQuery: {
@@ -27,9 +27,6 @@ const config = {
       Target: {
         weight: 3
       },
-    },
-    sort: {
-      "Title.keyword": { order: "asc" }
     },
     result_fields: {
       Title: {
@@ -83,15 +80,6 @@ const config = {
 };
 
 export default function App() {
-  const [sortOrder, setSortOrder] = useState("asc");
-
-  const handleSortAsc = () => {
-    setSortOrder("asc");
-  };
-
-  const handleSortDesc = () => {
-    setSortOrder("desc");
-  };
   return (
     <SearchProvider config={config}>
       <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
@@ -103,8 +91,6 @@ export default function App() {
                   header={
                     <>
                       <SearchBox autocompleteSuggestions={false} />
-                      {/* <button onClick={handleSortAsc}>Sort by Title (Ascending)</button>
-                      <button onClick={handleSortDesc}>Sort by Title (Descending)</button> */}
                     </>
                   } sideContent={
                     <div>
@@ -116,7 +102,6 @@ export default function App() {
                   bodyContent={
                     <Results
                       shouldTrackClickThrough={true}
-                      sortOptions={[{ field: "Title", order: sortOrder }]}
                     />
                   }
                   bodyHeader={
