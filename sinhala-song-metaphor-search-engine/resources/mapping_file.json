@@ -7,15 +7,14 @@
                         "type": "custom",
                         "tokenizer": "standard",
                         "filter": [
-                            "sinhala_stopwords",
-                            "lowercase"
+                            ["sinhala_stopwords", "synonym"]
                         ]
                     }
                 },
                 "filter": {
                     "sinhala_stopwords": {
                         "type": "stop",
-                        "stopwords": "_sinhala_"
+                        "stopwords": ["ගේ", "වූ", "නිසා", "බව"]
                     }
                 }
             }
