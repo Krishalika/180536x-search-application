@@ -1,0 +1,12 @@
+# Provides first 6 songs having word "හදවත" in Target value
+
+curl -XGET "http://e39c39014fe44be3b3a4f73eddc2f70b.containerhost:9244/search-index/_search" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+    "query": {
+        "match": {
+            "Target": "හදවත"
+        }
+    },
+    "from": 0,
+    "size": 6
+}'

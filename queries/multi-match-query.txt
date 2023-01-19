@@ -1,0 +1,14 @@
+# Provides songs having metaphor(s) at least with word 'හදවත' in target or source domain
+
+curl -XGET "http://e39c39014fe44be3b3a4f73eddc2f70b.containerhost:9244/search-index/_search" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+  "query": {
+    "multi_match": {
+      "query": "හදවත",
+      "type": "most_fields",
+      "fields": [
+        "Target","Source"
+      ]
+    }
+  }
+}'

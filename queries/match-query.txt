@@ -1,0 +1,12 @@
+# Search by target
+
+curl -XGET "http://e39c39014fe44be3b3a4f73eddc2f70b.containerhost:9244/search-index/_search" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+"query": {
+    "match": {
+      "Target": {
+        "query": "පිරිසිදු  හදවත"
+     }
+   }
+ }
+}'

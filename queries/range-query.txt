@@ -1,0 +1,13 @@
+# Songs released from year 2000 to 2023
+
+curl -XGET "http://e39c39014fe44be3b3a4f73eddc2f70b.containerhost:9244/search-index/_search" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+  "query": {
+    "range": {
+      "Year.keyword": {
+        "gte": 2000,
+        "lte": 2023
+      }
+    }
+  }
+}'

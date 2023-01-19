@@ -8,7 +8,6 @@
                         "tokenizer": "standard",
                         "filter": [
                             "sinhala_stopwords",
-                            "icu_normalizer",
                             "lowercase"
                         ]
                     }
